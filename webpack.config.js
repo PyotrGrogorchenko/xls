@@ -13,7 +13,7 @@ module.exports = (env, argv) => {
   const plugins = () => {
     const base = [
       new HtmlWebpackPlugin({
-        template: './index.html'
+        template: './assets/xls.html'
       }),
       new CopyPlugin({
         patterns: [
