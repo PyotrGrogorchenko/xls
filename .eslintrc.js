@@ -12,9 +12,12 @@ module.exports = {
   },
   extends: ['eslint:recommended', 'google'],
   rules: {
-    'semi': 'off',
+    'semi': 0,
     'comma-dangle': 'off',
     'require-jsdoc': 'off',
-    'max-len': ['error', {'code': 150}]
+    'max-len': ['error', {'code': 150}],
+    'indent': ['error', 2],
+    'arrow-parens': 0,
+    'no-unused-vars': 0
   }
 }
