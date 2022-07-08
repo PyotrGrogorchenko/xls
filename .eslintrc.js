@@ -15,6 +15,7 @@ module.exports = {
     'semi': 0,
     'comma-dangle': 'off',
     'require-jsdoc': 'off',
+    'no-debugger': 'off',
     'max-len': ['error', {'code': 150}],
     'indent': ['error', 2],
     'arrow-parens': 0,

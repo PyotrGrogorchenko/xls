@@ -4,6 +4,7 @@
   "description": "",
   "main": "webpack.config.js",
   "scripts": {
+    "kill": "kill -9 $(lsof -t -i:7000)",
     "dev": "webpack serve --mode=development",
     "prod": "webpack --mode=production"
   },
