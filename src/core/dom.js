@@ -49,8 +49,20 @@ class Dom {
     return this.$el.querySelectorAll(selector)
   }
 
+  find(selector) {
+    return $(this.$el.querySelector(selector))
+  }
+
   css(styles = {}) {
     Object.entries(styles).forEach(([k, v]) => this.$el.style[k] = v)
+  }
+
+  addClass(className) {
+    this.$el.classList.add(className)
+  }
+
+  removeClass(className) {
+    this.$el.classList.remove(className)
   }
 
   get data() {
