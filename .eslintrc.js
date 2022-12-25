@@ -17,7 +17,7 @@ module.exports = {
     'require-jsdoc': 'off',
     'no-debugger': 'off',
     'max-len': ['error', {'code': 150}],
-    'indent': ['error', 2],
+    'indent': ['error', 2, {'SwitchCase': 1}],
     'arrow-parens': 0,
     'no-unused-vars': 0
   }

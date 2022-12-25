@@ -16,3 +16,24 @@ export const matrix = ($target, $current) => {
     return res
   }, [])
 }
+
+export const nextSelector = (key, {col, row}) => {
+  switch (key) {
+    case 'Enter':
+    case 'ArrowDown':
+      row++
+      break
+    case 'Tab':
+    case 'ArrowRight':
+      col++
+      break
+    case 'ArrowLeft':
+      col--
+      break
+    case 'ArrowUp':
+      row--
+      break
+  }
+
+  return `[data-id="${Math.max(0, row)}:${Math.max(col, 0)}"]`
+}
