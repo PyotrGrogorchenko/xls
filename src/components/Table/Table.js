@@ -27,7 +27,7 @@ export class Table extends ExcelComponent {
 
     this.$on('formula:input', text => {
       this.selection.current.text(text)
-      this.updateCurrentTextInStore(this.selection.current, text)
+      this.updateCurrentTextInStore()
     })
 
     this.$on('formula:done', () => {
@@ -41,7 +41,7 @@ export class Table extends ExcelComponent {
 
   selectCell($cell) {
     this.selection.select($cell)
-    this.updateCurrentTextInStore($cell.id(), $cell.text())
+    this.updateCurrentTextInStore()
     // this.$emit('table:select', $cell)
     // this.$dispatch({type: 'TEST'})
   }
@@ -53,7 +53,7 @@ export class Table extends ExcelComponent {
   async resizeTable(event) {
     try {
       const data = await resizeHandler(this.$root, event)
-      console.log(data)
+      // console.log(data)
       this.$dispatch(actions.tableResize(data))
     } catch (e) {
       console.error('Resize error:', e.message)
@@ -97,12 +97,15 @@ export class Table extends ExcelComponent {
     }
   }
 
-  updateCurrentTextInStore = (id, value) => {
-    this.$dispatch(actions.changeText({id, value}))
+  updateCurrentTextInStore = () => {
+    this.$dispatch(actions.changeText({
+      id: this.selection.current.id(),
+      value: this.selection.current.text()
+    }))
   }
 
   onInput(event) {
-    this.updateCurrentTextInStore(this.selection.current.id(), $(event.target).text())
+    this.updateCurrentTextInStore()
     // this.$dispatch(actions.changeText({
     //   id: this.selection.current.id(),
     //   value: $(event.target).text()

@@ -7,7 +7,11 @@ export const rootReducer = (state, action) => {
       state[type][id] = value
       return {...state}
     case CHANGE_TEXT:
-      return {...state, currentText: action.data.value}
+      state['data'][id] = value
+      return {
+        ...state,
+        currentText: action.data.value
+      }
     default: return state
   }
 }
