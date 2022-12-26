@@ -29,6 +29,10 @@ export class Formula extends ExcelComponent {
     this.$on('table:input', $c => {
       this.$formula.text($c.text())
     })
+
+    // this.$subscribe(s => {
+    //   console.log('formula state', s)
+    // })
   }
 
   onInput(event) {

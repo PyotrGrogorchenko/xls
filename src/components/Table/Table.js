@@ -1,3 +1,5 @@
+import * as actions from '@/store/actions'
+
 import {ExcelComponent} from '@core/ExcelComponent'
 import {$} from '@core/dom'
 
@@ -30,20 +32,34 @@ export class Table extends ExcelComponent {
     this.$on('formula:done', () => {
       this.selection.current.focus()
     })
+
+    // this.$subscribe(s => {
+    //   console.log('table state', s)
+    // })
   }
 
   selectCell($cell) {
     this.selection.select($cell)
     this.$emit('table:select', $cell)
+    this.$dispatch({type: 'TEST'})
   }
 
   toHTML() {
-    return createTable()
+    return createTable(30, this.store.getState())
+  }
+
+  async resizeTable(event) {
+    try {
+      const data = await resizeHandler(this.$root, event)
+      this.$dispatch(actions.tableResize(data))
+    } catch (e) {
+      console.error('Resize error:', e.message)
+    }
   }
 
   onMousedown(event) {
     if (shouldResize(event)) {
-      resizeHandler(this.$root, event)
+      this.resizeTable(event)
       return
     }
 
@@ -55,7 +71,7 @@ export class Table extends ExcelComponent {
         this.selection.selectGroup($sells)
         return
       }
-      this.selection.select($target)
+      this.selectCell($target)
     }
   }
 
