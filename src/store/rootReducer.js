@@ -1,11 +1,13 @@
-import {TABLE_RESIZE} from './types'
+import {TABLE_RESIZE, CHANGE_TEXT} from './types'
 
 export const rootReducer = (state, action) => {
-  const colState = state.colState ?? {}
+  const {type, id, value} = action?.data ?? {}
   switch (action.type) {
     case TABLE_RESIZE:
-      colState[action.data.id] = action.data.value
-      return {...state, colState}
+      state[type][id] = value
+      return {...state}
+    case CHANGE_TEXT:
+      return {...state, currentText: action.data.value}
     default: return state
   }
 }

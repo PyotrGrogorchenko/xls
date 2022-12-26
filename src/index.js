@@ -6,9 +6,10 @@ import {Toolbar} from '@/components/Toolbar/Toolbar'
 import {createStore} from '@core/createStore'
 import {storage} from '@core/utils'
 import {rootReducer} from '@/store/rootReducer'
+import {initialState} from '@/store/initialState'
 import './scss/index.scss'
 
-const store = createStore(rootReducer, storage('excel-state'))
+const store = createStore(rootReducer, initialState)
 
 store.subscribe(s => {
   storage('excel-state', s)
