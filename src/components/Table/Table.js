@@ -1,4 +1,5 @@
 import * as actions from '@/store/actions'
+import {defaultStyles} from '@/constans'
 
 import {ExcelComponent} from '@core/ExcelComponent'
 import {$} from '@core/dom'
@@ -34,16 +35,16 @@ export class Table extends ExcelComponent {
       this.selection.current.focus()
     })
 
-    // this.$subscribe(s => {
-    //   console.log('table state', s)
-    // })
+    this.$on('toolbar:appliStyle', style => {
+      this.selection.applyStyle(style)
+    })
   }
 
   selectCell($cell) {
     this.selection.select($cell)
     this.updateCurrentTextInStore()
-    // this.$emit('table:select', $cell)
-    // this.$dispatch({type: 'TEST'})
+
+    console.log($cell.getStyles(Object.keys(defaultStyles)))
   }
 
   toHTML() {
@@ -53,7 +54,6 @@ export class Table extends ExcelComponent {
   async resizeTable(event) {
     try {
       const data = await resizeHandler(this.$root, event)
-      // console.log(data)
       this.$dispatch(actions.tableResize(data))
     } catch (e) {
       console.error('Resize error:', e.message)
@@ -106,9 +106,5 @@ export class Table extends ExcelComponent {
 
   onInput(event) {
     this.updateCurrentTextInStore()
-    // this.$dispatch(actions.changeText({
-    //   id: this.selection.current.id(),
-    //   value: $(event.target).text()
-    // }))
   }
 }

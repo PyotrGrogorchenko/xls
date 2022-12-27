@@ -76,6 +76,13 @@ class Dom {
     this.$el.classList.remove(className)
   }
 
+  getStyles(styles = []) {
+    return styles.reduce((r, s) => {
+      r[s] = this.$el.style[s]
+      return r
+    }, {})
+  }
+
   id(parse) {
     if (parse) {
       const parsed = this.id().split(':')
