@@ -1,4 +1,4 @@
-import {TABLE_RESIZE, CHANGE_TEXT, CHANGE_STYLES} from './types'
+import {TABLE_RESIZE, CHANGE_TEXT, SET_STYLE} from './types'
 
 export const tableResize = (data) => {
   return {
@@ -17,9 +17,9 @@ export const changeText = (data) => {
   }
 }
 
-export const changeStyles = (data) => {
+export const setStyle = (data) => {
   return {
-    type: CHANGE_STYLES,
+    type: SET_STYLE,
     data
   }
 }

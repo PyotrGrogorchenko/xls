@@ -1,4 +1,4 @@
-export const defaultStyles = {
+export const defaultStyle = {
   textAlign: 'left',
   fontWeight: 'normal',
   fontStyle: 'normal',

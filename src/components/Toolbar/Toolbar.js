@@ -1,4 +1,5 @@
-import {defaultStyles} from '@/constans'
+import {defaultStyle} from '@/constans'
+import * as actions from '@/store/actions'
 import {ExcelStateComponent} from '@core/ExcelStateComponent'
 import {$} from '@core/dom'
 
@@ -11,13 +12,13 @@ export class Toolbar extends ExcelStateComponent {
     super($root, {
       name: 'Toolbar',
       listeners: ['click'],
-      subscribe: ['currentStyles'],
+      subscribe: ['currentStyle'],
       ...options
     })
   }
 
   prepare() {
-    this.initState(defaultStyles)
+    this.initState(defaultStyle)
   }
 
   get template() {
@@ -29,15 +30,17 @@ export class Toolbar extends ExcelStateComponent {
   }
 
   storeChanged(changes) {
-    console.log(changes)
+    this.setState(changes.currentStyle)
+    this.$root.html(this.template)
   }
 
   onClick(e) {
     const $target = $(e.target)
     if ($target.data.type === 'button') {
       const value = JSON.parse($target.data.value)
-      this.setState(value)
-      this.$emit('toolbar:applyStyle', value)
+      this.$dispatch(actions.setStyle(value))
+      // this.setState(value)
+      // this.$emit('toolbar:applyStyle', value)
     }
   }
 }

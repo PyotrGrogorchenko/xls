@@ -1,4 +1,4 @@
-import {TABLE_RESIZE, CHANGE_TEXT, CHANGE_STYLES} from './types'
+import {TABLE_RESIZE, CHANGE_TEXT, SET_STYLE} from './types'
 
 export const rootReducer = (state, action) => {
   switch (action.type) {
@@ -11,10 +11,13 @@ export const rootReducer = (state, action) => {
         ...state,
         currentText: action.data.value
       }
-    case CHANGE_STYLES:
+    case SET_STYLE:
       return {
         ...state,
-        currentStyles: action.data
+        currentStyle: {
+          ...state.currentStyle,
+          ...action.data
+        }
       }
     default: return state
   }

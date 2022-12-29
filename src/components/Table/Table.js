@@ -1,5 +1,5 @@
 import * as actions from '@/store/actions'
-import {defaultStyles} from '@/constans'
+// import {defaultStyles} from '@/constans'
 
 import {ExcelComponent} from '@core/ExcelComponent'
 import {$} from '@core/dom'
@@ -16,6 +16,7 @@ export class Table extends ExcelComponent {
     super($root, {
       name: 'Table',
       listeners: ['mousedown', 'keydown', 'input'],
+      subscribe: ['currentStyle'],
       ...options
     })
   }
@@ -35,17 +36,17 @@ export class Table extends ExcelComponent {
       this.selection.current.focus()
     })
 
-    this.$on('toolbar:applyStyle', style => {
-      this.selection.applyStyle(style)
-    })
+    // this.$on('toolbar:applyStyle', style => {
+    //   this.selection.applyStyle(style)
+    // })
   }
 
   selectCell($cell) {
     this.selection.select($cell)
     this.updateCurrentTextInStore()
 
-    const styles = $cell.getStyles(Object.keys(defaultStyles))
-    this.$dispatch(actions.changeStyles(styles))
+    // const styles = $cell.getStyles(Object.keys(defaultStyles))
+    // this.$dispatch(actions.changeStyles(styles))
   }
 
   toHTML() {
@@ -107,5 +108,9 @@ export class Table extends ExcelComponent {
 
   onInput(event) {
     this.updateCurrentTextInStore()
+  }
+
+  storeChanged(changes) {
+    this.selection.applyStyle(changes.currentStyle)
   }
 }

@@ -1,11 +1,11 @@
-import {defaultStyles} from '@/constans';
+import {defaultStyle} from '@/constans';
 import {storage} from '@core/utils'
 
 const defaultState = {
   row: {},
   col: {},
   data: {},
-  currentStyles: defaultStyles,
+  currentStyle: defaultStyle,
   currentText: ''
 }
 
