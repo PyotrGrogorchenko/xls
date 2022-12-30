@@ -1,25 +1,37 @@
-import {TABLE_RESIZE, CHANGE_TEXT, SET_STYLE} from './types'
+import {SET_TABLE_SIZE, SET_TEXT, SET_CURRENT_STYLE, SET_ACTIVE_ID, PUT_STYLE} from './types'
 
-export const tableResize = (data) => {
+export const setTableSize = (data) => {
   return {
-    type: TABLE_RESIZE,
+    type: SET_TABLE_SIZE,
     data
   }
 }
 
-export const changeText = (data) => {
+export const setText = (data) => {
   return {
-    type: CHANGE_TEXT,
-    data: {
-      ...data,
-      type: 'data'
-    }
+    type: SET_TEXT,
+    data
   }
 }
 
-export const setStyle = (data) => {
+export const setCurrentStyle = (data) => {
   return {
-    type: SET_STYLE,
+    type: SET_CURRENT_STYLE,
     data
+  }
+}
+
+export const putStyle = (ids) => {
+  return {
+    type: PUT_STYLE,
+    data: ids
+  }
+}
+
+
+export const setActiveId = (id) => {
+  return {
+    type: SET_ACTIVE_ID,
+    data: id
   }
 }

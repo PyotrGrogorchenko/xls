@@ -17,7 +17,7 @@ const getHeight = (state, index) => {
 const toCell = (state, row) => {
   return (_, col) => {
     const id = `${row}:${col}`
-    const data = state.data[id] ?? ''
+    const data = state.text[id] ?? ''
     return `<div
       class="cell"
       contenteditable

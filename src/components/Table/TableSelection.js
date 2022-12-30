@@ -3,13 +3,17 @@ export class TableSelection {
 
   constructor() {
     this.group = []
-    this.current = null
+    // this.current = null
+  }
+
+  get current() {
+    return this.group[0]
   }
 
   select($el) {
     this.clear()
     this.group = [$el]
-    this.current = $el
+    // this.current = $el
     $el.focus().addClass(TableSelection.className)
   }
 

@@ -36,17 +36,24 @@ export class Table extends ExcelComponent {
       this.selection.current.focus()
     })
 
-    // this.$on('toolbar:applyStyle', style => {
-    //   this.selection.applyStyle(style)
+    // this.$on('toolbar:onStyle', style => {
+    //   console.log('toolbar:onStyle', style)
+    //   // this.selection.applyStyle(style)
     // })
   }
 
   selectCell($cell) {
     this.selection.select($cell)
-    this.updateCurrentTextInStore()
+    // this.updateCurrentTextInStore()
 
+    // const {text} = this.store.getState()
+    // const {id} = $cell.data
+    // this.$dispatch(actions.setActiveId(id))
+
+    // const {text} = this.store.getState()
+    // console.log('text', text[id])
     // const styles = $cell.getStyles(Object.keys(defaultStyles))
-    // this.$dispatch(actions.changeStyles(styles))
+    // this.$dispatch(actions.setStyle(styles))
   }
 
   toHTML() {
@@ -56,7 +63,7 @@ export class Table extends ExcelComponent {
   async resizeTable(event) {
     try {
       const data = await resizeHandler(this.$root, event)
-      this.$dispatch(actions.tableResize(data))
+      this.$dispatch(actions.setTableSize(data))
     } catch (e) {
       console.error('Resize error:', e.message)
     }
@@ -68,15 +75,15 @@ export class Table extends ExcelComponent {
       return
     }
 
-    const $target = $(event.target)
+    const $cell = $(event.target)
     if (isCell(event)) {
       if (event.shiftKey) {
-        const $sells = matrix($target, this.selection.current)
+        const $sells = matrix($cell, this.selection.current)
           .map(id => this.$root.find(`[data-id="${id}"]`))
         this.selection.selectGroup($sells)
         return
       }
-      this.selectCell($target)
+      this.selectCell($cell)
     }
   }
 
@@ -100,7 +107,7 @@ export class Table extends ExcelComponent {
   }
 
   updateCurrentTextInStore = () => {
-    this.$dispatch(actions.changeText({
+    this.$dispatch(actions.setText({
       id: this.selection.current.id(),
       value: this.selection.current.text()
     }))
@@ -112,5 +119,11 @@ export class Table extends ExcelComponent {
 
   storeChanged(changes) {
     this.selection.applyStyle(changes.currentStyle)
+
+    const ids = this.selection.group.reduce((r, v) => {
+      r.push(v.id())
+      return r
+    }, [])
+    this.$dispatch(actions.putStyle(ids))
   }
 }
