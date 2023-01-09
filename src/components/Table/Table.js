@@ -16,7 +16,7 @@ export class Table extends ExcelComponent {
     super($root, {
       name: 'Table',
       listeners: ['mousedown', 'keydown', 'input'],
-      subscribe: ['currentStyle'],
+      // subscribe: ['currentStyle'],
       ...options
     })
   }
@@ -29,22 +29,22 @@ export class Table extends ExcelComponent {
 
     this.$on('formula:input', text => {
       this.selection.current.text(text)
-      this.updateCurrentTextInStore()
+      this.putText()
     })
 
     this.$on('formula:done', () => {
       this.selection.current.focus()
     })
 
-    // this.$on('toolbar:onStyle', style => {
-    //   console.log('toolbar:onStyle', style)
-    //   // this.selection.applyStyle(style)
-    // })
+    this.$on('toolbar:onStyle', style => {
+      this.selection.applyStyle(style)
+      this.$dispatch(actions.setCurrentStyle(style))
+    })
   }
 
   selectCell($cell) {
     this.selection.select($cell)
-    // this.updateCurrentTextInStore()
+    this.putText()
 
     // const {text} = this.store.getState()
     // const {id} = $cell.data
@@ -106,15 +106,8 @@ export class Table extends ExcelComponent {
     }
   }
 
-  updateCurrentTextInStore = () => {
-    this.$dispatch(actions.setText({
-      id: this.selection.current.id(),
-      value: this.selection.current.text()
-    }))
-  }
-
   onInput(event) {
-    this.updateCurrentTextInStore()
+    this.putText()
   }
 
   storeChanged(changes) {
@@ -124,6 +117,22 @@ export class Table extends ExcelComponent {
       r.push(v.id())
       return r
     }, [])
-    this.$dispatch(actions.putStyle(ids))
+    this.$dispatch(actions.setStyle(ids))
+  }
+
+  putText = () => {
+    const id = this.selection.current.id()
+    const text = this.selection.current.text()
+
+    this.$dispatch(actions.setText({id, value: text}))
+    this.$dispatch(actions.setCurrentText(text))
+  }
+
+  putStyle = () => {
+    // const id = this.selection.current.id()
+    // const text = this.selection.current.text()
+
+    // this.$dispatch(actions.setText({id, value: text}))
+    // this.$dispatch(actions.setCurrentText(text))
   }
 }

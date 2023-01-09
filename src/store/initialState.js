@@ -9,7 +9,8 @@ const defaultState = {
 }
 
 const initialState = storage('excel-state') ? storage('excel-state') : defaultState;
-initialState.activeId = '';
+
+initialState.currentId = '';
 initialState.currentText = '';
 initialState.currentStyle = defaultStyle
 

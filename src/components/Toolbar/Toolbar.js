@@ -1,5 +1,4 @@
 import {defaultStyle} from '@/constans'
-import * as actions from '@/store/actions'
 import {ExcelStateComponent} from '@core/ExcelStateComponent'
 import {$} from '@core/dom'
 
@@ -38,9 +37,8 @@ export class Toolbar extends ExcelStateComponent {
     const $target = $(e.target)
     if ($target.data.type === 'button') {
       const value = JSON.parse($target.data.value)
-      this.$dispatch(actions.setCurrentStyle(value))
-      // this.setState(value)
-      // this.$emit('toolbar:onStyle', value)
+      this.setState(value)
+      this.$emit('toolbar:onStyle', value)
     }
   }
 }

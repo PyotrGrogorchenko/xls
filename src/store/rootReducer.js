@@ -1,4 +1,4 @@
-import {SET_TABLE_SIZE, SET_TEXT, SET_CURRENT_STYLE, SET_ACTIVE_ID, PUT_STYLE} from './types'
+import {SET_TABLE_SIZE, SET_TEXT, SET_CURRENT_STYLE, SET_CURRENT_TEXT, SET_STYLE} from './types'
 
 export const rootReducer = (state, action) => {
   switch (action.type) {
@@ -8,10 +8,12 @@ export const rootReducer = (state, action) => {
       return setText(state, action)
     case SET_CURRENT_STYLE:
       return setCurrnetStyle(state, action)
-    case PUT_STYLE:
-      return putStyle(state, action)
-    case SET_ACTIVE_ID:
-      return setActiveId(state, action)
+    case SET_CURRENT_TEXT:
+      return setCurrnetText(state, action)
+    case SET_STYLE:
+      return setStyle(state, action)
+    // case SET_ACTIVE_ID:
+    //   return setActiveId(state, action)
     default:
       return state
   }
@@ -39,19 +41,26 @@ const setCurrnetStyle = (state, action) => {
   }
 }
 
-const putStyle = (state, action) => {
+const setStyle = (state, action) => {
   const {data: ids} = action
 
-  console.log('putStyle', ids)
+  console.log('setStyle', ids)
   return state
   // {
   //   ...state
   // }
 }
 
-const setActiveId = (state, action) => {
+const setCurrnetText = (state, action) => {
   return {
     ...state,
-    activeId: action.data
+    currentText: action.data
   }
 }
+
+// const setActiveId = (state, action) => {
+//   return {
+//     ...state,
+//     activeId: action.data
+//   }
+// }
