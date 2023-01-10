@@ -1,5 +1,4 @@
 import * as actions from '@/store/actions'
-// import {defaultStyles} from '@/constans'
 
 import {ExcelComponent} from '@core/ExcelComponent'
 import {$} from '@core/dom'
@@ -16,13 +15,13 @@ export class Table extends ExcelComponent {
     super($root, {
       name: 'Table',
       listeners: ['mousedown', 'keydown', 'input'],
-      // subscribe: ['currentStyle'],
       ...options
     })
   }
 
   init() {
     super.init()
+    // this.initStyle()
     this.selection = new TableSelection()
     const $cell = this.$root.find('[data-id="0:0"]')
     this.selectCell($cell)
@@ -37,8 +36,8 @@ export class Table extends ExcelComponent {
     })
 
     this.$on('toolbar:onStyle', style => {
-      this.selection.applyStyle(style)
-      this.$dispatch(actions.setCurrentStyle(style))
+      this.putStyle(style)
+      this.$dispatch(actions.setStyle(this.selection.ids()))
     })
   }
 
@@ -46,14 +45,9 @@ export class Table extends ExcelComponent {
     this.selection.select($cell)
     this.putText()
 
-    // const {text} = this.store.getState()
-    // const {id} = $cell.data
-    // this.$dispatch(actions.setActiveId(id))
-
-    // const {text} = this.store.getState()
-    // console.log('text', text[id])
-    // const styles = $cell.getStyles(Object.keys(defaultStyles))
-    // this.$dispatch(actions.setStyle(styles))
+    const {style} = this.store.getState()
+    const id = this.selection.current.id()
+    this.putStyle(style[id])
   }
 
   toHTML() {
@@ -110,16 +104,6 @@ export class Table extends ExcelComponent {
     this.putText()
   }
 
-  storeChanged(changes) {
-    this.selection.applyStyle(changes.currentStyle)
-
-    const ids = this.selection.group.reduce((r, v) => {
-      r.push(v.id())
-      return r
-    }, [])
-    this.$dispatch(actions.setStyle(ids))
-  }
-
   putText = () => {
     const id = this.selection.current.id()
     const text = this.selection.current.text()
@@ -128,11 +112,13 @@ export class Table extends ExcelComponent {
     this.$dispatch(actions.setCurrentText(text))
   }
 
-  putStyle = () => {
-    // const id = this.selection.current.id()
-    // const text = this.selection.current.text()
+  putStyle = style => {
+    this.$dispatch(actions.setCurrentStyle(style))
+    this.selection.applyStyle(this.store.getState().currentStyle)
+  }
 
-    // this.$dispatch(actions.setText({id, value: text}))
-    // this.$dispatch(actions.setCurrentText(text))
+  initStyle = () => {
+    // const {}
+    console.log('initStyle', {...this.store.getState()})
   }
 }

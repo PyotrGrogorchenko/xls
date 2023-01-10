@@ -14,10 +14,17 @@ const getHeight = (state, index) => {
   return (state?.row?.[index] ?? DEFAULT_HEIGHT) + 'px'
 }
 
-const toCell = (state, row) => {
-  return (_, col) => {
+const toCell = (state, row) => (
+  (_, col) => {
     const id = `${row}:${col}`
     const data = state.text[id] ?? ''
+    const style = state.style[id]
+
+    // ${style ? Object.keys(style).reduce((r, k) => {
+    //   r.concat(k + ':' + style[k])
+    //   return r
+    // }, '') : ''}"
+
     return `<div
       class="cell"
       contenteditable
@@ -25,10 +32,10 @@ const toCell = (state, row) => {
       data-row="${row}"
       data-id="${id}"
       data-type="cell"
-      style="width: ${getWidth(state, col)}"
+      style="width: ${getWidth(state, col)};"
     >${data}</div>`
   }
-}
+)
 
 const toColumn = ({content, index, width}) => {
   return `

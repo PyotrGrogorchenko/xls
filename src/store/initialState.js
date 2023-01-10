@@ -1,4 +1,4 @@
-import {defaultStyle} from '@/constans';
+import {defaultStyle} from '@/constans'
 import {storage} from '@core/utils'
 
 const defaultState = {
@@ -10,7 +10,6 @@ const defaultState = {
 
 const initialState = storage('excel-state') ? storage('excel-state') : defaultState;
 
-initialState.currentId = '';
 initialState.currentText = '';
 initialState.currentStyle = defaultStyle
 
