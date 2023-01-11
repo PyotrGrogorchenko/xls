@@ -1,11 +1,13 @@
-import {defaultStyle} from '@/constans'
+import {defaultStyle, defaultTitle} from '@/constans'
 import {storage} from '@core/utils'
 
 const defaultState = {
   row: {},
   col: {},
   text: {},
-  style: {}
+  style: {},
+  dataset: {},
+  title: defaultTitle
 }
 
 const initialState = storage('excel-state') ? storage('excel-state') : defaultState;

@@ -1,3 +1,5 @@
+import {parse} from '@core/parse'
+
 export class TableSelection {
   static className = 'selected'
 
@@ -9,15 +11,14 @@ export class TableSelection {
     return this.group[0]
   }
 
+  get ids() {
+    return this.group.map($el => $el.id())
+  }
+
   select = $el => {
     this.clear()
     this.group = [$el]
     $el.focus().addClass(TableSelection.className)
-  }
-
-  clear = () => {
-    this.group.forEach(($el) => $el.removeClass(TableSelection.className))
-    this.group.length = 0
   }
 
   selectGroup = $group => {
@@ -26,10 +27,14 @@ export class TableSelection {
     this.group.forEach($el => $el.addClass(TableSelection.className))
   }
 
+  clear = () => {
+    this.group.forEach(($el) => $el.removeClass(TableSelection.className))
+    this.group.length = 0
+  }
+
   applyStyle = style => this.group.forEach($el => $el.css(style))
 
-  ids = () => this.group.reduce((r, v) => {
-    r.push(v.id())
-    return r
-  }, [])
+  setValue = value => {
+    this.group.forEach($el => $el.attr('data-value', value).text(parse(value)))
+  }
 }

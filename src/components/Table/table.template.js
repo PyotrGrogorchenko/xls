@@ -1,3 +1,6 @@
+import {camelToDashCase} from '@core/utils'
+import {parse} from '@core/parse'
+
 const CODES = {
   A: 65,
   Z: 90
@@ -14,16 +17,18 @@ const getHeight = (state, index) => {
   return (state?.row?.[index] ?? DEFAULT_HEIGHT) + 'px'
 }
 
+const getStyle = (state, id) => {
+  const style = state.style[id]
+  if (!style) return ''
+  return Object.entries(style).map(([k, v]) => `${camelToDashCase(k)}:${v}`).join(';')
+}
+
 const toCell = (state, row) => (
   (_, col) => {
     const id = `${row}:${col}`
     const data = state.text[id] ?? ''
-    const style = state.style[id]
-
-    // ${style ? Object.keys(style).reduce((r, k) => {
-    //   r.concat(k + ':' + style[k])
-    //   return r
-    // }, '') : ''}"
+    const dataset = state.dataset[id] ?? {}
+    const dataValue = dataset['value'] ?? ''
 
     return `<div
       class="cell"
@@ -32,8 +37,9 @@ const toCell = (state, row) => (
       data-row="${row}"
       data-id="${id}"
       data-type="cell"
-      style="width: ${getWidth(state, col)};"
-    >${data}</div>`
+      data-value="${dataValue}"
+      style="width: ${getWidth(state, col)}; ${getStyle(state, id)}"
+    >${parse(data)}</div>`
   }
 )
 

@@ -1,6 +1,7 @@
 import * as actions from '@/store/actions'
 
 import {ExcelComponent} from '@core/ExcelComponent'
+import {parse} from '@core/parse'
 import {$} from '@core/dom'
 
 import {createTable} from './table.template'
@@ -21,14 +22,14 @@ export class Table extends ExcelComponent {
 
   init() {
     super.init()
-    // this.initStyle()
     this.selection = new TableSelection()
     const $cell = this.$root.find('[data-id="0:0"]')
     this.selectCell($cell)
 
-    this.$on('formula:input', text => {
-      this.selection.current.text(text)
+    this.$on('formula:input', value => {
+      this.selection.setValue(value)
       this.putText()
+      this.putDataset()
     })
 
     this.$on('formula:done', () => {
@@ -37,7 +38,7 @@ export class Table extends ExcelComponent {
 
     this.$on('toolbar:onStyle', style => {
       this.putStyle(style)
-      this.$dispatch(actions.setStyle(this.selection.ids()))
+      this.$dispatch(actions.setStyle(this.selection.ids))
     })
   }
 
@@ -79,6 +80,7 @@ export class Table extends ExcelComponent {
       }
       this.selectCell($cell)
     }
+    this.$emit('table:select', this.selection.current)
   }
 
   onKeydown(event) {
@@ -100,8 +102,14 @@ export class Table extends ExcelComponent {
     }
   }
 
-  onInput(event) {
+  onInput() {
+    const text = this.selection.current.text()
+
+    this.selection.setValue(text)
     this.putText()
+    this.putDataset()
+
+    this.$emit('table:input', this.selection.current)
   }
 
   putText = () => {
@@ -117,8 +125,9 @@ export class Table extends ExcelComponent {
     this.selection.applyStyle(this.store.getState().currentStyle)
   }
 
-  initStyle = () => {
-    // const {}
-    console.log('initStyle', {...this.store.getState()})
+  putDataset = () => {
+    const id = this.selection.current.id()
+    const dataValue = this.selection.current.data.value
+    this.$dispatch(actions.setDataset({id, name: 'value', value: dataValue}))
   }
 }
