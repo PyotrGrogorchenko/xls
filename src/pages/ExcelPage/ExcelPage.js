@@ -7,7 +7,7 @@ import {rootReducer} from '@/store/rootReducer'
 import {getState} from '@/store/initialState'
 
 import {Page} from '@core/Page'
-import {createStore} from '@core/createStore'
+import {createStore} from '@core/store/createStore'
 import {storage, debounce} from '@core/utils'
 
 import {storageName} from './excel.functions'

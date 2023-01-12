@@ -23,8 +23,10 @@ export class Router {
     this.$root.clear()
     const param = ActiveRoute.param
     const Page = this.routes[param[0]] || this.routes.dashboard
+
     this.page = new Page(param)
     this.$root.append(this.page.getRoot())
+
     this.page.afterRender()
   }
 

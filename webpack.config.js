@@ -57,7 +57,6 @@ module.exports = (env, argv) => {
     devtool: isDev ? 'source-map' : false,
     devServer: {
       port: '7000',
-      // open: true,
       hot: true,
       watchFiles: './'
     },
@@ -75,11 +74,7 @@ module.exports = (env, argv) => {
           test: /\.m?js$/,
           exclude: /node_modules/,
           use: {
-            loader: 'babel-loader',
-            options: {
-              presets: ['@babel/preset-env'],
-              plugins: ['@babel/plugin-proposal-class-properties']
-            }
+            loader: 'babel-loader'
           }
         }
       ]
