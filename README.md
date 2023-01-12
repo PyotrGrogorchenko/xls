@@ -1,1 +1,1 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/c0525d74-fcf9-4696-9279-592afd1a97ff/deploy-status)](https://app.netlify.com/sites/xls/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/c0525d74-fcf9-4696-9279-592afd1a97ff/deploy-status)](https://xls.netlify.app)
