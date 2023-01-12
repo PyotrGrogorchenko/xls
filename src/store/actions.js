@@ -6,7 +6,8 @@ import {
   SET_STYLE,
   SET_CURRENT_TEXT,
   SET_TITLE,
-  SET_DATASET
+  SET_DATASET,
+  SET_LAST_OPENED
 } from './types'
 
 export const setTableSize = data => {
@@ -30,6 +31,11 @@ export const setDataset = data => {
   }
 }
 
+export const setLastOpened = date => {
+  return {
+    type: SET_LAST_OPENED
+  }
+}
 // Text
 export const setText = text => {
   return {

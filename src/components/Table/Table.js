@@ -1,7 +1,6 @@
 import * as actions from '@/store/actions'
 
 import {ExcelComponent} from '@core/ExcelComponent'
-import {parse} from '@core/parse'
 import {$} from '@core/dom'
 
 import {createTable} from './table.template'

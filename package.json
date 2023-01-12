@@ -6,7 +6,8 @@
   "scripts": {
     "kill": "kill -9 $(lsof -t -i:7000)",
     "dev": "npm run kill & webpack serve --mode=development",
-    "prod": "webpack --mode=production"
+    "prod": "webpack --mode=production",
+    "lint": "npx eslint ./src"
   },
   "repository": {
     "type": "git",

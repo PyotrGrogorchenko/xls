@@ -1,5 +1,5 @@
 import {defaultStyle, defaultTitle} from '@/constans'
-import {storage} from '@core/utils'
+import {storage, clone} from '@core/utils'
 
 const defaultState = {
   row: {},
@@ -7,12 +7,15 @@ const defaultState = {
   text: {},
   style: {},
   dataset: {},
-  title: defaultTitle
+  title: defaultTitle,
+  lastOpened: new Date().toJSON()
 }
 
-const initialState = storage('excel-state') ? storage('excel-state') : defaultState;
+export const getState = stateId => {
+  const state = storage(stateId) ? storage(stateId) : clone(defaultState)
 
-initialState.currentText = '';
-initialState.currentStyle = defaultStyle
+  state.currentText = ''
+  state.currentStyle = clone(defaultStyle)
 
-export {initialState}
+  return state
+}

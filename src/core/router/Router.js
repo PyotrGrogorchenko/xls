@@ -5,8 +5,8 @@ export class Router {
   constructor(selector = '#app', routes = {}) {
     this.$root = $(selector)
     this.routes = routes
-
     this.onRoute = this.onRoute.bind(this)
+    this.page = null
 
     this.init()
   }
@@ -17,10 +17,15 @@ export class Router {
   }
 
   onRoute() {
-    const Page = this.routes.excel
-    const page = new Page()
-    this.$root.append(page.getRoot())
-    page.afterRender()
+    if (this.page) {
+      this.page.destroy()
+    }
+    this.$root.clear()
+    const param = ActiveRoute.param
+    const Page = this.routes[param[0]] || this.routes.dashboard
+    this.page = new Page(param)
+    this.$root.append(this.page.getRoot())
+    this.page.afterRender()
   }
 
   destroy() {

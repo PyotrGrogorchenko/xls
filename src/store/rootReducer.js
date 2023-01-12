@@ -5,7 +5,8 @@ import {
   SET_STYLE,
   SET_CURRENT_STYLE,
   SET_TITLE,
-  SET_DATASET
+  SET_DATASET,
+  SET_LAST_OPENED
 } from './types'
 
 export const rootReducer = (state, action) => {
@@ -24,6 +25,8 @@ export const rootReducer = (state, action) => {
       return setStyle(state, action)
     case SET_CURRENT_STYLE:
       return setCurrnetStyle(state, action)
+    case SET_LAST_OPENED:
+      return setLastOpened(state, action)
     default:
       return state
   }
@@ -50,6 +53,8 @@ const setDataset = (state, action) => {
 
   return {...state}
 }
+
+const setLastOpened = (state, action) => ({...state, lastOpened: new Date().toJSON()})
 
 // Text
 const setText = (state, action) => {

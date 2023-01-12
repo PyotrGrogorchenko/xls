@@ -9,3 +9,4 @@ export const SET_STYLE = 'SET_STYLE'
 export const SET_TITLE = 'SET_TITLE'
 
 export const SET_DATASET = 'SET_DATASET'
+export const SET_LAST_OPENED = 'SET_LAST_OPENED'

@@ -3,19 +3,21 @@ import {Formula} from '@/components/Formula/Formula'
 import {Header} from '@/components/Header/Header'
 import {Table} from '@/components/Table/Table'
 import {Toolbar} from '@/components/Toolbar/Toolbar'
-import {createStore} from '@core/createStore'
-import {storage, debounce} from '@core/utils'
 import {rootReducer} from '@/store/rootReducer'
-import {initialState} from '@/store/initialState'
+import {getState} from '@/store/initialState'
 
 import {Page} from '@core/Page'
+import {createStore} from '@core/createStore'
+import {storage, debounce} from '@core/utils'
+
+import {storageName} from './excel.functions'
 
 export class ExcelPage extends Page {
   getRoot() {
-    const store = createStore(rootReducer, initialState)
+    const store = createStore(rootReducer, getState(storageName(this.params)))
 
     const stateListener = debounce(state => {
-      storage('excel-state', state)
+      storage(storageName(this.params), state)
     }, 500)
 
     store.subscribe(stateListener)
