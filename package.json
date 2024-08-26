@@ -5,7 +5,7 @@
   "main": "webpack.config.js",
   "scripts": {
     "kill": "kill -9 $(lsof -t -i:7000)",
-    "dev": "npm run kill & webpack serve --mode=development",
+    "start": "npm run kill & webpack serve --mode=development",
     "prod": "webpack --mode=production",
     "lint": "npx eslint ./src",
     "test": "jest",
