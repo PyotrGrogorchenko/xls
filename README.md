@@ -1,4 +1,4 @@
-# dice
+# xls
 
 <a>https://xls.netlify.app/</a>
 
